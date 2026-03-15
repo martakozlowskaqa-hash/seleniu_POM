@@ -14,6 +14,7 @@ class Locators:
     Create Account Page locators
     """
     FIRST_NAME = (By.ID, 'customer_firstname')
+    LAST_NAME = (By.ID, 'customer_lastname')
     GENDER_MALE = (By.XPATH, '//label[@for="id_gender1"]')
     GENDER_FEMALE = (By.XPATH, '//label[@for="id_gender2"]')
     EMAIL = (By.ID, 'email')
@@ -38,6 +39,8 @@ class CreateAccountPage(BasePage):
     def enter_first_name(self, first_name):
         self.driver.find_element(*Locators.FIRST_NAME).send_keys(first_name)
 
+    def enter_last_name(self, last_name):
+        self.driver.find_element(*Locators.LAST_NAME).send_keys(last_name)
 
     def get_entered_email(self):
         """"
