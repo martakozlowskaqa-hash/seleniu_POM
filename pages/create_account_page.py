@@ -22,6 +22,8 @@ class Locators:
     YEAR_OF_BIRTH = (By.ID, 'years')
     MONTH_OF_BIRTH = (By.ID, 'months')
     DAY_OF_BIRTH = (By.ID, 'days')
+    VISIBLE_ERORRS = (By.XPATH, '//div[@class="alert alert-danger"]/ol/li')
+    NUMBER_OF_ERRORS = (By.XPATH, '//div[@class="alert alert-danger"]/p')
 
 class CreateAccountPage(BasePage):
     """
@@ -53,3 +55,20 @@ class CreateAccountPage(BasePage):
     def select_date_of_birth(self,date_of_birth):
         birth_day = Select(self.driver.find_element(*Locators.DAY_OF_BIRTH))
         birth_day.select_by_value(str(date_of_birth.day))
+        month_s = Select(self.driver.find_element(*Locators.MONTH_OF_BIRTH))
+        month_s.select_by_value(str(date_of_birth.month))
+        year_s = Select(self.driver.find_element(*Locators.YEAR_OF_BIRTH))
+        year_s.select_by_value(str(date_of_birth.year))
+
+    def click_register_button(self):
+        self.driver.find_element(*Locators.REGISTER_BTN).click()
+
+    def get_number_of_errors_message(self):
+        return self.driver.find_element(*Locators.NUMBER_OF_ERRORS).text
+
+    def get_visible_errors(self):
+        errors_webelements = self.driver.find_elements(*Locators.VISIBLE_ERORRS)
+        visible_errors = []
+        for error in errors_webelements:
+            visible_errors.append(error.text)
+        return visible_errors
