@@ -10,6 +10,8 @@ class Locators:
     FIRST_NAME = (By.ID, 'customer_firstname')
     GENDER_MALE = (By.XPATH, '//label[@for="id_gender1"]')
     GENDER_FEMALE = (By.XPATH, '//label[@for="id_gender2"]')
+    EMAIL = (By.ID, 'email')
+    PASSWORD = (By.ID, 'passwd')
 
 class CreateAccountPage(BasePage):
     """
@@ -23,6 +25,16 @@ class CreateAccountPage(BasePage):
 
     def enter_first_name(self, first_name):
         self.driver.find_element(*Locators.FIRST_NAME).send_keys(first_name)
+
+
+    def get_entered_email(self):
+        """"
+        Assert reapeted email from previous page
+        """
+        return self.driver.find_element(*Locators.EMAIL).get_attribute("value")
+
+    def enter_password(self, password):
+        self.driver.find_element(*Locators.PASSWORD).send_keys(password)
 
 
     def _verify_page(self):

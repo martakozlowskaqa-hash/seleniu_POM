@@ -14,4 +14,8 @@ class RegistrationTest(BaseTest):
     def testNoLastname(self):
         self.create_account_page.choose_gender(self.data.GENDER)
         self.create_account_page.enter_first_name(self.data.FIRST_NAME)
+        # print(self.create_account_page.get_entered_email())
+        # print(self.data.EMAIL)
+        self.assertEqual(self.data.EMAIL, self.create_account_page.get_entered_email())
+        self.create_account_page.enter_password(self.data.PASSWORD)
         sleep(3)
