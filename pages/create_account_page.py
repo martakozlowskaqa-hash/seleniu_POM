@@ -1,6 +1,12 @@
-from time import sleep
-from pages.base_page import BasePage
+import selenium
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from time import sleep
+from selenium.webdriver.support.select import Select
+from pages.base_page import BasePage
+from time import sleep
 from utils.custom_types import Gender
 
 class Locators:
@@ -12,6 +18,10 @@ class Locators:
     GENDER_FEMALE = (By.XPATH, '//label[@for="id_gender2"]')
     EMAIL = (By.ID, 'email')
     PASSWORD = (By.ID, 'passwd')
+    REGISTER_BTN = (By.ID, 'submitAccount')
+    YEAR_OF_BIRTH = (By.ID, 'years')
+    MONTH_OF_BIRTH = (By.ID, 'months')
+    DAY_OF_BIRTH = (By.ID, 'days')
 
 class CreateAccountPage(BasePage):
     """
@@ -36,7 +46,10 @@ class CreateAccountPage(BasePage):
     def enter_password(self, password):
         self.driver.find_element(*Locators.PASSWORD).send_keys(password)
 
-
     def _verify_page(self):
-        #todo: improve this!!
-        sleep(3)
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(Locators.FIRST_NAME))
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(Locators.REGISTER_BTN))
+
+    def select_date_of_birth(self,date_of_birth):
+        birth_day = Select(self.driver.find_element(*Locators.DAY_OF_BIRTH))
+        birth_day.select_by_value(str(date_of_birth.day))

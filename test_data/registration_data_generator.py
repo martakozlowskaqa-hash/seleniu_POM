@@ -11,4 +11,6 @@ class RegistrationDataGenerator:
         else:
             self.FIRST_NAME = self.fake.first_name_male()
         self.EMAIL = self.fake.email()
-        self.PASSWORD = self.fake.password()
+        #zdeklarowanie hasla min 5 do 10 znakow
+        self.PASSWORD = self.fake.password(int(random.random() * 6) + 5)
+        self.DATE_OF_BIRTH = self.fake.date_of_birth()
